@@ -185,9 +185,11 @@ def run(ctx, detach, quiet, env):
     `FUNC_REF` should be of the format `{file or module}::{function name}`.
     Alternatively, you can refer to the function via the stub:
 
-    `{file or module}::{stub variable name}.{function name}`
+    ```
+    {file or module}::{stub variable name}.{function name}
+    ```
 
-    **Examples:**
+    **Examples**
 
     To run the hello_world function (or local entrypoint) in my_app.py:
 
