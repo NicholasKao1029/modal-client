@@ -176,12 +176,12 @@ class _Stub:
         return self._name
 
     @property
-    def app(self) -> Optional[_App]:
+    def app(self) -> "_Stub":
         """`stub.app` is deprecated: use e.g. `stub.obj` instead of `stub.app.obj`
         if you need to access objects on the running app.
         """
         deprecation_warning(date(2023, 9, 11), _Stub.app.__doc__)
-        return self._app
+        return self
 
     @property
     def app_id(self) -> Optional[str]:
@@ -278,7 +278,6 @@ class _Stub:
     @asynccontextmanager
     async def _set_local_app(self, app: _App) -> AsyncGenerator[None, None]:
         self._app = app
-        app._associate_stub_local(self)
         try:
             yield
         finally:
