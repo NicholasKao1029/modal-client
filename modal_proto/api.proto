@@ -659,7 +659,7 @@ message Function {
     string checksum = 1;
     CheckpointStatus status = 2;
   }
-  CheckpointInfo checkpoint = 42;
+  CheckpointInfo checkpoint = 42 [deprecated=true];
   repeated ObjectDependency object_dependencies = 43;
 }
 
