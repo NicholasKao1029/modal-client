@@ -809,7 +809,7 @@ def main(container_args: api_pb2.ContainerArguments, client: Client):
             # TODO(erikbern): the second condition is for legacy compatibility, remove soon
             # TODO(erikbern): there is no client test for this branch
             input_stream = container_app._get_pty()
-            imp_fun.fun = run_in_pty(imp_fun.fun, input_stream, pty_info)
+            imp_fun.fun = run_in_pty(imp_fun.fun, input_stream, pty_info, is_async=imp_fun.is_async)
 
         if not imp_fun.is_async:
             call_function_sync(function_io_manager, imp_fun)

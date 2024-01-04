@@ -114,7 +114,7 @@ def _pty_spawn(pty_info: api_pb2.PTYInfo, fn, args, kwargs):
     return os.waitpid(pid, 0)[1]
 
 
-def run_in_pty(fn, queue, pty_info: api_pb2.PTYInfo):
+def run_in_pty(fn, queue, pty_info: api_pb2.PTYInfo, is_async: bool):
     import pty
     import threading
 
@@ -150,6 +150,10 @@ def run_in_pty(fn, queue, pty_info: api_pb2.PTYInfo):
         queue.put(None)
         t.join()
         writer.close()
+        if is_async:
+            return asyncio.sleep(0)  # no-op coro returning `None`
+        else:
+            return None
 
     return wrapped_fn
 
