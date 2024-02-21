@@ -8,7 +8,7 @@ from modal_version import __version__
 
 try:
     from ._tunnel import Tunnel, forward
-    from .app import container_app, is_local
+    from .app import container_app, is_local, stop_fetching_inputs
     from .client import Client
     from .cls import Cls
     from .dict import Dict
@@ -70,6 +70,7 @@ __all__ = [
     "forward",
     "is_local",
     "method",
+    "stop_fetching_inputs",
     "web_endpoint",
     "wsgi_app",
 ]

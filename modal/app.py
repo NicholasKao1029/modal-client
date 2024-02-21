@@ -240,6 +240,7 @@ class _ContainerApp:
     _tag_to_object_id: Dict[str, str]
     _object_handle_metadata: Dict[str, Optional[Message]]
     _stub_name: Optional[str]
+    _fetching_inputs: bool
 
     def __init__(self):
         self._client = None
@@ -249,6 +250,7 @@ class _ContainerApp:
         self._environment_name = None
         self._tag_to_object_id = {}
         self._object_handle_metadata = {}
+        self._fetching_inputs = True
 
     @property
     def client(self) -> Optional[_Client]:
@@ -259,6 +261,10 @@ class _ContainerApp:
     def app_id(self) -> Optional[str]:
         """A unique identifier for this running App."""
         return self._app_id
+
+    @property
+    def fetching_inputs(self) -> bool:
+        return self._fetching_inputs
 
     def _associate_stub_container(self, stub):
         if self._associated_stub:
@@ -346,6 +352,9 @@ class _ContainerApp:
         _is_container_app = False
         _container_app.__init__()  # type: ignore
 
+    def stop_fetching_inputs(self):
+        self._fetching_inputs = False
+
 
 LocalApp = synchronize_api(_LocalApp)
 ContainerApp = synchronize_api(_ContainerApp)
@@ -363,6 +372,10 @@ def is_local() -> bool:
     Returns `False` when executed from a Modal container in the cloud.
     """
     return not _is_container_app
+
+
+def stop_fetching_inputs():
+    return _container_app.stop_fetching_inputs()
 
 
 async def _list_apps(env: str, client: Optional[_Client] = None) -> List[api_pb2.AppStats]:
